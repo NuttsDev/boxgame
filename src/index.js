@@ -1,7 +1,7 @@
-const canvas = document.getElementById('canvas');
+const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 // init objects
-let player = new Obj(0, 0, 25, 25, 'red', true);
+let player = new Obj(0, 0, 5, 5, 'red', true);
 function initCanvas() {
 	
 }
@@ -16,7 +16,6 @@ function updateFrame() {
 	ctx.fillStyle = player.color;
 	ctx.fillRect(player.x, player.y, player.width, player.height);
 	
-	
 }
 
 function Obj(x, y, width, height, color, isGravitated) {
@@ -29,4 +28,40 @@ function Obj(x, y, width, height, color, isGravitated) {
 }
 setInterval(function() {
 	updateFrame();
+}, 0);
+
+
+// movement handler
+
+document.addEventListener('keydown', getKey);
+document.addEventListener('keyup', getKeyUp);
+
+let wPressed = false;
+let aPressed = false;
+let dPressed = false;
+
+function getKey(e) {
+	if(e.key == "w") {
+		wPressed = true;
+	} else if (e.key == "a") {
+		aPressed = true;
+	} else if (e.key == "d") {
+		dPressed = true;
+	}
+}
+
+function getKeyUp(e) {
+	if(e.key == "w") {
+		wPressed = false;
+	} else if (e.key == "a") {
+		aPressed = false;
+	} else if (e.key == "d") {
+		dPressed = false;
+	}
+}
+
+setInterval(function() {
+	if(wPressed) { player.y -= 0.1; }
+	if(aPressed) { player.x -= 0.1; }
+	if(dPressed) { player.x += 0.1; }
 }, 0);
